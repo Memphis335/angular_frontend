@@ -1,0 +1,27 @@
+<div class="quizContainer" *ngIf="questions$ | async as questions; else loading">
+    <form [formGroup]="quizForm">
+        <mat-list *ngFor="let question of questions">
+            <mat-card>
+                <mat-card-header>
+                    <div class="difficulty" [ngClass]="{'gg-dice-1': question.difficulty == 'easy','gg-dice-2': question.difficulty == 'medium','gg-dice-3': question.difficulty == 'hard'}"></div>
+                    <mat-card-title>{{ question.question | parseHtml }}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <mat-radio-group class="radio-group" name="{{question.id}}" formControlName="{{question.id}}">
+                        <mat-radio-button class="radio-button" [ngClass]="{'invalid': !question.correct && checked, 'valid': question.correct}" *ngFor="let posAnswer of question.possibleAnswers" [value]="posAnswer">
+                            {{ posAnswer | parseHtml }}
+                        </mat-radio-button>
+                        <mat-error *ngIf="questionRequired(question.id)">Please choose an answer.</mat-error>
+                    </mat-radio-group>
+                    <div class="ribbon">{{ question.category }}</div>
+                </mat-card-content>
+            </mat-card>
+        </mat-list>
+    </form>
+</div>
+<ng-template class="loading" #loading>
+    <mat-spinner></mat-spinner>
+</ng-template>
+<div class="large-button">
+    <button mat-raised-button color="accent" (click)="checkAnswers()" [disabled]="!quizForm.valid || checked">Check my answers!</button>
+</div>
