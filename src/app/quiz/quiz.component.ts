@@ -3,7 +3,6 @@ import { IQuestion } from '../model/question.interface';
 import { QuizService } from '../services/quiz.service';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { ConfirmBoxInitializer, DialogLayoutDisplay, DisappearanceAnimation, AppearanceAnimation } from '@costlydeveloper/ngx-awesome-popup';
-import { map, Observable, tap } from 'rxjs';
 
 @Component({
   selector: 'app-quiz',
@@ -11,37 +10,37 @@ import { map, Observable, tap } from 'rxjs';
   styleUrls: ['./quiz.component.scss']
 })
 export class QuizComponent implements OnInit {
-  public questions$: Observable<IQuestion[]> | undefined;
+  questions: IQuestion[] = [];
   answer: any;
   checked = false;
   quizForm: FormGroup = new FormGroup({});
 
-  constructor(private qService: QuizService, public fb: FormBuilder) { }
-
-  ngOnInit(): void {
-    this.load();
+  constructor(private qService: QuizService, public fb: FormBuilder) {
   }
 
-  load(){
-    this.questions$ = this.qService.getQuestions().pipe(tap(questions => {
+  ngOnInit(): void {
+    this.getQuestions();
+  }
+
+  getQuestions(){
+    this.checked = false;
+    this.qService.getQuestions().subscribe((questions) => {
+      this.questions = questions;
       questions.forEach((q) => {
         this.quizForm.addControl(q.id, new FormControl('', [Validators.required]))
       })
-    }));
+    });
   }
 
-  checkAnswers(){
+  checkAnswers(questions: IQuestion[]){
     let answers: any[] = [];
-    this.questions$?.pipe(map(questions => {
-      questions.forEach((question: IQuestion) => {
-        let answer = {
-          "id": question.id,
-          "answer": this.quizForm.controls[question.id].value
-        };
-        answers.push(answer);
-      });
-    }));
-    
+    questions.forEach((question: IQuestion) => {
+      let answer = {
+        "id": question.id,
+        "answer": this.quizForm.controls[question.id].value
+      };
+      answers.push(answer);
+    });
     this.qService.checkAnswers(answers).subscribe((result) => {
       this.markAnswers(result);
     });
@@ -51,13 +50,11 @@ export class QuizComponent implements OnInit {
     this.checked = true;
     let numCorrect = 0;
     results.forEach(answer => {
-      this.questions$?.pipe(map(questions => {
-        let question = questions.find(q => q.id == answer.id);
-        if(question){
-          question.correct = answer.answerResult;
-          answer.answerResult ? numCorrect++ : numCorrect;
-        }
-      }));
+      let question = this.questions.find((q) => q.id == answer.id);
+      if(question){
+        question.correct = answer.answerResult;
+        answer.answerResult ? numCorrect++ : numCorrect;
+      }
     });
 
     this.openConfirmBox(numCorrect);
@@ -84,7 +81,7 @@ export class QuizComponent implements OnInit {
 
     newConfirmBox.openConfirmBox$().subscribe(resp => {
       if(resp.clickedButtonID == 'try again'){
-        this.load();
+        this.getQuestions();
       }
     });
 }

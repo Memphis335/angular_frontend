@@ -1,4 +1,4 @@
-<div class="quizContainer" *ngIf="questions$ | async as questions; else loading">
+<div class="quizContainer" *ngIf="questions.length; else loading">
     <form [formGroup]="quizForm">
         <mat-list *ngFor="let question of questions">
             <mat-card>
@@ -23,5 +23,5 @@
     <mat-spinner></mat-spinner>
 </ng-template>
 <div class="large-button">
-    <button mat-raised-button color="accent" (click)="checkAnswers()" [disabled]="!quizForm.valid || checked">Check my answers!</button>
+    <button mat-raised-button color="accent" (click)="checkAnswers(questions)" [disabled]="!quizForm.valid || checked">Check my answers!</button>
 </div>

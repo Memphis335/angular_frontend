@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  BACKEND:'http://localhost:8080'
+  BACKEND:'https://quad-be.ew.r.appspot.com'
 };
 
 /*
