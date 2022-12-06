@@ -2,26 +2,20 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.3.
 
-## Development server
+## Prerequisites
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+This repository is part of springboot_backend and provides the front end of an application that resembles a quiz app.This needs to be up and running for this application to work. 
 
-## Code scaffolding
+1. [NodeJS](https://nodejs.org/en/) v16.17.1 or later
+2. [Angular CLI](https://angular.io/cli) v14.2.10 or later. **Note** This will be installed during step 6.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## In order to run the application:
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+1. Open a terminal window.
+2. Create a local directory to hold your Angular application by typing `mkdir Angular`
+3. Change to that directory by typing `cd Angular`.
+4. Clone the springboot_backend project into the directory you created by typing `git clone https://github.com/Memphis335/angular_frontend`
+5. Change to the directory of the completed project by typing `cd angular_frontend`
+6. Install dependencies by typing `npm install`
+7. Run the application by typing `npm start`
+8. Navigate to `http://localhost:4200/`.
