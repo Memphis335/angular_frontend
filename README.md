@@ -14,7 +14,7 @@ This repository is part of springboot_backend and provides the front end of an a
 1. Open a terminal window.
 2. Create a local directory to hold your Angular application by typing `mkdir Angular`
 3. Change to that directory by typing `cd Angular`.
-4. Clone the springboot_backend project into the directory you created by typing `git clone https://github.com/Memphis335/angular_frontend`
+4. Clone the angular_frontend project into the directory you created by typing `git clone https://github.com/Memphis335/angular_frontend`
 5. Change to the directory of the completed project by typing `cd angular_frontend`
 6. Install dependencies by typing `npm install`
 7. Run the application by typing `npm start`
